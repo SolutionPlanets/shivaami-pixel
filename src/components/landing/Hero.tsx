@@ -17,23 +17,23 @@ import { cn } from "@/lib/utils";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#EEF0FB] pt-16">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#FFF9F0] pt-16">
 
       {/* ── Large animated blobs ── */}
       <div
         aria-hidden
         className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full animate-pulse-glow pointer-events-none"
-        style={{ background: "radial-gradient(circle, #c7d2fe 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, #c7d2fe 10%, transparent 100%)" }}
       />
       <div
         aria-hidden
         className="absolute -bottom-40 -right-20 w-[500px] h-[500px] rounded-full animate-pulse-glow pointer-events-none"
-        style={{ background: "radial-gradient(circle, #bbf7d0 0%, transparent 70%)", animationDelay: "2s" }}
+        style={{ background: "radial-gradient(circle, #bbf7d0 10%, transparent 100%)", animationDelay: "2s" }}
       />
       <div
         aria-hidden
         className="absolute top-1/3 left-1/3 w-96 h-96 rounded-full animate-pulse-glow pointer-events-none"
-        style={{ background: "radial-gradient(circle, #ddd6fe 0%, transparent 70%)", animationDelay: "1s" }}
+        style={{ background: "radial-gradient(circle, #ddd6fe 10%, transparent 100%)", animationDelay: "1s" }}
       />
 
       {/* ── Spinning ring decoration ── */}

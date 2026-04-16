@@ -69,7 +69,7 @@ export default function BenefitsGrid() {
   const { ref, isVisible } = useInView(0.1);
 
   return (
-    <section id="benefits" className="relative py-28 bg-[#F5F8FF] overflow-hidden">
+    <section id="benefits" className="relative py-28 bg-[#F5F0FF] overflow-hidden">
       {/* Decorative floating icons in background */}
       <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
         <Sparkles
