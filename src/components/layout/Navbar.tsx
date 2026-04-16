@@ -1,0 +1,150 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, X, Phone } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Products", href: "/products" },
+  { label: "Marketplace", href: "/marketplace" },
+  { label: "Contact", href: "#contact" },
+];
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="flex items-center gap-1">
+              <div className="flex gap-0.5">
+                <span className="w-2 h-2 rounded-full bg-[#4285F4]" />
+                <span className="w-2 h-2 rounded-full bg-[#EA4335]" />
+                <span className="w-2 h-2 rounded-full bg-[#FBBC05]" />
+                <span className="w-2 h-2 rounded-full bg-[#34A853]" />
+              </div>
+            </div>
+            <span className="font-bold text-lg text-foreground tracking-tight">
+              Shivaami
+            </span>
+            <span className="hidden sm:inline-block text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+              Google Partner
+            </span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="tel:+919022223600"
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              +91 90 2222 3600
+            </a>
+            <Link
+              href="/marketplace"
+              className={cn(
+                buttonVariants({ size: "sm" }),
+                "rounded-full bg-primary hover:bg-primary/90 text-white"
+              )}
+            >
+              Order Now
+            </Link>
+          </div>
+
+          {/* Mobile Menu */}
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger className="md:hidden">
+              <span
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "rounded-full"
+                )}
+              >
+                <Menu className="w-5 h-5" />
+              </span>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-72 p-6">
+              <div className="flex items-center justify-between mb-8">
+                <span className="font-bold text-lg">Shivaami</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full"
+                  onClick={() => setOpen(false)}
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+              <nav className="flex flex-col gap-1 mb-8">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="px-4 py-3 text-base font-medium rounded-xl hover:bg-muted transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+              <div className="flex flex-col gap-3">
+                <Link
+                  href="/marketplace"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    buttonVariants(),
+                    "rounded-full bg-primary text-white justify-center"
+                  )}
+                >
+                  Order Now
+                </Link>
+                <a
+                  href="https://wa.me/919022223600"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-full hover:bg-muted transition-colors"
+                >
+                  WhatsApp Us
+                </a>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </header>
+  );
+}
