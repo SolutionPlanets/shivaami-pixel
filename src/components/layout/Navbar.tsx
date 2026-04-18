@@ -1,15 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { products } from "@/lib/products";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Products", href: "/products" },
   { label: "Marketplace", href: "/marketplace" },
   { label: "Contact", href: "#contact" },
 ];
@@ -17,12 +18,32 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setProductsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  // Close dropdown on route change
+  useEffect(() => {
+    setProductsOpen(false);
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <header
@@ -54,7 +75,53 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
+            <Link
+              href="/"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-colors"
+            >
+              Home
+            </Link>
+
+            {/* Products dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setProductsOpen((v) => !v)}
+                className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-colors"
+              >
+                Products
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {productsOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white rounded-2xl border border-border/60 shadow-lg shadow-black/8 overflow-hidden z-50">
+                  <div className="p-2">
+                    {products.map((product) => (
+                      <Link
+                        key={product.slug}
+                        href={`/products/${product.slug}`}
+                        className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-[#F0F4FF] hover:text-primary transition-colors group"
+                      >
+                        {product.name}
+                        <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary opacity-0 group-hover:opacity-100 transition-all" />
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="border-t border-border/60 p-2">
+                    <Link
+                      href="/products"
+                      className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold text-primary hover:bg-primary/8 transition-colors"
+                    >
+                      View All Products
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {navLinks.slice(1).map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
@@ -110,7 +177,38 @@ export default function Navbar() {
                 </Button>
               </div>
               <nav className="flex flex-col gap-1 mb-8">
-                {navLinks.map((link) => (
+                <Link
+                  href="/"
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-3 text-base font-medium rounded-xl hover:bg-muted transition-colors"
+                >
+                  Home
+                </Link>
+
+                {/* Products with sub-links */}
+                <div>
+                  <Link
+                    href="/products"
+                    onClick={() => setOpen(false)}
+                    className="px-4 py-3 text-base font-medium rounded-xl hover:bg-muted transition-colors block"
+                  >
+                    Products
+                  </Link>
+                  <div className="ml-4 mt-0.5 flex flex-col gap-0.5">
+                    {products.map((product) => (
+                      <Link
+                        key={product.slug}
+                        href={`/products/${product.slug}`}
+                        onClick={() => setOpen(false)}
+                        className="px-4 py-2 text-sm text-muted-foreground font-medium rounded-xl hover:bg-muted hover:text-foreground transition-colors"
+                      >
+                        {product.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {navLinks.slice(1).map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}

@@ -42,7 +42,7 @@ const products = [
     slug: "pixel-10-pro",
   },
   {
-    name: "Pixel 10 Pro Max",
+    name: "Pixel 10 Pro XL",
     tagline: "The ultimate flagship experience",
     badge: "Flagship",
     badgeColor: "bg-[#FCE8E6] text-[#D93025]",
