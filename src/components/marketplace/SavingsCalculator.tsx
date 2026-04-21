@@ -14,8 +14,8 @@ import { useInView } from "@/hooks/useInView";
 const MODELS = [
   { slug: "pixel-10a", label: "Pixel 10a", defaultQty: 5 },
   { slug: "pixel-10", label: "Pixel 10", defaultQty: 5 },
-  { slug: "pixel-10-pro", label: "Pixel 10 Pro XL", defaultQty: 3 },
-  { slug: "pixel-10-pro-max", label: "Pixel 10 Pro Fold", defaultQty: 2 },
+  { slug: "pixel-10-pro-xl", label: "Pixel 10 Pro XL", defaultQty: 3 },
+  { slug: "pixel-10-pro-fold", label: "Pixel 10 Pro Fold", defaultQty: 2 },
 ];
 
 const BENEFITS = [
@@ -77,7 +77,7 @@ export default function SavingsCalculator() {
     }));
   }
 
-  const proQty = (qtys["pixel-10-pro"] ?? 0) + (qtys["pixel-10-pro-max"] ?? 0);
+  const proQty = (qtys["pixel-10-pro-xl"] ?? 0) + (qtys["pixel-10-pro-fold"] ?? 0);
   const nonProQty = (qtys["pixel-10a"] ?? 0) + (qtys["pixel-10"] ?? 0);
   const savingsPct =
     summary.retailTotal > 0

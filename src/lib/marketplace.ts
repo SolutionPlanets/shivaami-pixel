@@ -1,8 +1,8 @@
 export const RETAIL_PRICES: Record<string, number> = {
   "pixel-10a": 49_999,
   "pixel-10": 79_999,
-  "pixel-10-pro": 1_09_999,
-  "pixel-10-pro-max": 1_79_999,
+  "pixel-10-pro-xl": 1_09_999,
+  "pixel-10-pro-fold": 1_79_999,
 };
 
 export const BULK_TIERS = [
@@ -22,7 +22,7 @@ export const BENEFIT_VALUES = {
   google_ai_pro: 23_400,
 } as const;
 
-export const PRO_SLUGS = new Set(["pixel-10-pro", "pixel-10-pro-max"]);
+export const PRO_SLUGS = new Set(["pixel-10-pro-xl", "pixel-10-pro-fold"]);
 
 export function getDiscountPct(totalQty: number): number {
   return (

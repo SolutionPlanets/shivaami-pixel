@@ -31,7 +31,7 @@ const products = [
     slug: "pixel-10",
   },
   {
-    name: "Pixel 10 Pro",
+    name: "Pixel 10 Pro XL",
     tagline: "Pro performance for power users",
     badge: "Popular",
     badgeColor: "bg-[#E8D5FF] text-[#7C3AED]",
@@ -39,18 +39,18 @@ const products = [
     colorNames: ["Obsidian", "Sterling", "Lavender"],
     accentBg: "#E8D5FF",
     features: ["Pro camera system", "Magic Cue", "7 years updates"],
-    slug: "pixel-10-pro",
+    slug: "pixel-10-pro-xl",
   },
   {
-    name: "Pixel 10 Pro XL",
+    name: "Pixel 10 Pro Fold",
     tagline: "The ultimate flagship experience",
     badge: "Flagship",
     badgeColor: "bg-[#FCE8E6] text-[#D93025]",
     colors: ["#1F1F1F", "#C0C0C0", "#E8D5FF"],
     colorNames: ["Obsidian", "Sterling", "Lavender"],
     accentBg: "#FEF0CD",
-    features: ["6.9\" Pro Display", "Titan chip", "All AI features"],
-    slug: "pixel-10-pro-max",
+    features: ["Foldable display", "Titan chip", "All AI features"],
+    slug: "pixel-10-pro-fold",
   },
 ];
 

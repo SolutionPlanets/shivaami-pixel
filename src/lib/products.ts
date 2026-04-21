@@ -190,7 +190,7 @@ export const products: Product[] = [
     ],
   },
   {
-    slug: "pixel-10-pro",
+    slug: "pixel-10-pro-xl",
     name: "Pixel 10 Pro XL",
     tagline: "Pro performance for power users",
     badge: "Popular",
@@ -268,7 +268,7 @@ export const products: Product[] = [
     ],
   },
   {
-    slug: "pixel-10-pro-max",
+    slug: "pixel-10-pro-fold",
     name: "Pixel 10 Pro Fold",
     tagline: "The ultimate flagship experience",
     badge: "Flagship",

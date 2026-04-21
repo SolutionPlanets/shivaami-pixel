@@ -4,8 +4,8 @@ import { Mail, Phone, MessageCircle } from "lucide-react";
 const productLinks = [
   { label: "Pixel 10a", href: "/products/pixel-10a" },
   { label: "Pixel 10", href: "/products/pixel-10" },
-  { label: "Pixel 10 Pro", href: "/products/pixel-10-pro" },
-  { label: "Pixel 10 Pro XL", href: "/products/pixel-10-pro-max" },
+  { label: "Pixel 10 Pro XL", href: "/products/pixel-10-pro-xl" },
+  { label: "Pixel 10 Pro Fold", href: "/products/pixel-10-pro-fold" },
 ];
 
 const quickLinks = [
