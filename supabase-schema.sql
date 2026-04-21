@@ -68,8 +68,8 @@ create policy "Public read products"
 insert into public.products (slug, name, price_inr) values
   ('pixel-10a',       'Google Pixel 10a',       null),
   ('pixel-10',        'Google Pixel 10',         null),
-  ('pixel-10-pro',    'Google Pixel 10 Pro',     null),
-  ('pixel-10-pro-max','Google Pixel 10 Pro Max', null)
+  ('pixel-10-pro',    'Google Pixel 10 Pro XL',   null),
+  ('pixel-10-pro-max','Google Pixel 10 Pro Fold', null)
 on conflict (slug) do nothing;
 
 
