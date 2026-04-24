@@ -57,20 +57,21 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex items-center gap-1">
-              <div className="flex gap-0.5">
-                <span className="w-2 h-2 rounded-full bg-[#4285F4]" />
-                <span className="w-2 h-2 rounded-full bg-[#EA4335]" />
-                <span className="w-2 h-2 rounded-full bg-[#FBBC05]" />
-                <span className="w-2 h-2 rounded-full bg-[#34A853]" />
+            {/* Shivaami */}
+            <div className="flex items-center gap-1.5">
+              
+              <span className="font-bold text-lg text-foreground tracking-tight">Shivaami</span>
+            </div>
+            {/* Separator */}
+            <span className="text-muted-foreground text-sm select-none">×</span>
+            {/* Tax Print */}
+            <div className="flex items-center gap-1.5">
+              
+              <div className="flex flex-col leading-none gap-px">
+                <span className="font-bold text-base text-[#E85520] tracking-tight leading-none">Tax Print</span>
+                <span className="hidden sm:block text-[9px] text-muted-foreground leading-none">Since 1962</span>
               </div>
             </div>
-            <span className="font-bold text-lg text-foreground tracking-tight">
-              Shivaami
-            </span>
-            <span className="hidden sm:inline-block text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-              Google Partner
-            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -166,7 +167,10 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="right" className="w-72 p-6">
               <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-lg">Shivaami</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-base leading-none">Shivaami</span>
+                  <span className="text-xs text-muted-foreground leading-none">× Tax Print</span>
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"

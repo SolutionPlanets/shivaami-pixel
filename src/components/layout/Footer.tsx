@@ -24,13 +24,21 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex gap-0.5">
-                <span className="w-2 h-2 rounded-full bg-[#4285F4]" />
-                <span className="w-2 h-2 rounded-full bg-[#EA4335]" />
-                <span className="w-2 h-2 rounded-full bg-[#FBBC05]" />
-                <span className="w-2 h-2 rounded-full bg-[#34A853]" />
+              {/* Shivaami */}
+              <div className="flex items-center gap-1.5">
+                
+                <span className="font-bold text-background text-lg">Shivaami</span>
               </div>
-              <span className="font-bold text-background text-lg">Shivaami</span>
+              {/* Separator */}
+              <span className="text-background/40 text-sm select-none">×</span>
+              {/* Tax Print */}
+              <div className="flex items-center gap-1.5">
+                
+                <div className="flex flex-col leading-none gap-px">
+                  <span className="font-bold text-[#E85520] text-base leading-none">Tax Print</span>
+                  <span className="text-[9px] text-background/50 leading-none">Since 1962</span>
+                </div>
+              </div>
             </div>
             <p className="text-sm leading-relaxed mb-4 text-background/60">
               Mumbai&apos;s authorized Google Partner for Pixel SMB plans. Empowering
@@ -124,7 +132,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-background/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-background/40">
-            © {new Date().getFullYear()} Shivaami. All rights reserved.
+            © {new Date().getFullYear()} Shivaami × Tax Print. All rights reserved.
           </p>
           <p className="text-xs text-background/40">
             Google and Pixel are trademarks of Google LLC. Shivaami is an
