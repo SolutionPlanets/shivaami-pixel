@@ -1,16 +1,13 @@
 export const RETAIL_PRICES: Record<string, number> = {
-  "pixel-10a": 49_999,
-  "pixel-10": 79_999,
-  "pixel-10-pro-xl": 1_09_999,
-  "pixel-10-pro-fold": 1_79_999,
+  "pixel-10a": 46_999,
+  "pixel-10": 67_999,
+  "pixel-10-pro-xl": 1_14_999,
+  "pixel-10-pro-fold": 1_62_999,
 };
 
+// No bulk discount — these are fixed corporate prices (incl. 18% GST)
 export const BULK_TIERS = [
-  { min: 1, max: 4, discountPct: 5 },
-  { min: 5, max: 9, discountPct: 8 },
-  { min: 10, max: 19, discountPct: 12 },
-  { min: 20, max: 49, discountPct: 15 },
-  { min: 50, max: Infinity, discountPct: 18 },
+  { min: 1, max: Infinity, discountPct: 0 },
 ] as const;
 
 export const BENEFIT_VALUES = {
@@ -30,13 +27,8 @@ export function getDiscountPct(totalQty: number): number {
   );
 }
 
-export function getTierLabel(totalQty: number): string {
-  if (totalQty === 0) return "Add devices to see your discount";
-  const pct = getDiscountPct(totalQty);
-  const next = BULK_TIERS.find((t) => t.min > totalQty);
-  if (!next) return `${pct}% corporate discount (maximum tier)`;
-  return `${pct}% corporate discount — add ${next.min - totalQty} more for ${next.discountPct}%`;
-}
+export const CORPORATE_PRICING_NOTE =
+  "Corporate Pricing. All prices are including 18% GST input credit.";
 
 export function calcItemBenefitValue(slug: string): number {
   const base =

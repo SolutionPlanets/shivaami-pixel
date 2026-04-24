@@ -228,12 +228,7 @@ export default function OrderFormModal({
               Complete Your Order
             </h2>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {summary.totalQty} device(s) · {formatInr(summary.effectivePrice)}
-              {summary.discountPct > 0 && (
-                <span className="text-emerald-600 ml-1">
-                  ({summary.discountPct}% bulk discount applied)
-                </span>
-              )}
+              {summary.totalQty} device(s) · {formatInr(summary.retailTotal)} · Corporate pricing incl. GST
             </p>
           </div>
           {!submitting && (
@@ -370,7 +365,7 @@ export default function OrderFormModal({
             ) : form.paymentMode === "invoice" ? (
               "Request Invoice & Confirm Order"
             ) : (
-              `Pay ${formatInr(summary.effectivePrice)} via Razorpay`
+              `Pay ${formatInr(summary.retailTotal)} via Razorpay`
             )}
           </button>
 

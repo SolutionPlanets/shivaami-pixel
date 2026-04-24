@@ -1,7 +1,7 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { calcSavings, formatInr, getTierLabel, RETAIL_PRICES } from "@/lib/marketplace";
+import { calcSavings, formatInr, CORPORATE_PRICING_NOTE, RETAIL_PRICES } from "@/lib/marketplace";
 import { cn } from "@/lib/utils";
 
 interface OrderSummaryProps {
@@ -31,7 +31,7 @@ export default function OrderSummary({ onCheckout }: OrderSummaryProps) {
       </div>
 
       {/* Items list */}
-      <div className="px-6 py-4 flex flex-col gap-4 min-h-[120px]">
+      <div className="px-6 py-4 flex flex-col gap-4 min-h-30">
         {items.length === 0 ? (
           <p className="text-sm text-muted-foreground text-center py-8">
             Add devices above to build your order
@@ -102,38 +102,13 @@ export default function OrderSummary({ onCheckout }: OrderSummaryProps) {
       {/* Totals */}
       {items.length > 0 && (
         <div className="px-6 pb-4 border-t border-border/60 pt-4 flex flex-col gap-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Retail total</span>
-            <span className="line-through text-muted-foreground tabular-nums">
-              {formatInr(summary.retailTotal)}
-            </span>
+          <div className="flex justify-between font-bold text-base">
+            <span>Total</span>
+            <span className="tabular-nums">{formatInr(summary.retailTotal)}</span>
           </div>
-          {summary.discountPct > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-emerald-600 font-medium">
-                Bulk discount ({summary.discountPct}%)
-              </span>
-              <span className="text-emerald-600 font-semibold tabular-nums">
-                −{formatInr(summary.discountAmount)}
-              </span>
-            </div>
-          )}
-          <div className="flex justify-between font-bold text-base pt-1 border-t border-border/60 mt-1">
-            <span>You Pay</span>
-            <span className="tabular-nums">{formatInr(summary.effectivePrice)}</span>
-          </div>
-          {summary.benefitsValue > 0 && (
-            <p className="text-xs text-muted-foreground">
-              + {formatInr(summary.benefitsValue)} in B2B benefits included
-            </p>
-          )}
-
-          {/* Tier hint */}
-          {summary.totalQty > 0 && summary.totalQty < 50 && (
-            <p className="text-xs text-primary mt-1">
-              {getTierLabel(summary.totalQty)}
-            </p>
-          )}
+          <p className="text-xs text-primary font-medium">
+            {CORPORATE_PRICING_NOTE}
+          </p>
         </div>
       )}
 
@@ -152,11 +127,6 @@ export default function OrderSummary({ onCheckout }: OrderSummaryProps) {
           Proceed to Order →
         </button>
 
-        {summary.totalQty >= 50 && (
-          <p className="text-xs text-center text-muted-foreground mt-3">
-            50+ devices? Our team will contact you for a custom quote.
-          </p>
-        )}
       </div>
     </div>
   );
@@ -176,7 +146,7 @@ export function MobileCartBar({ onCheckout }: { onCheckout: () => void }) {
   if (totalQuantity === 0) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden px-4 pb-4 pt-2 bg-gradient-to-t from-white via-white to-transparent">
+    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden px-4 pb-4 pt-2 bg-linear-to-t from-white via-white to-transparent">
       <button
         onClick={onCheckout}
         className="w-full bg-primary text-white rounded-full py-4 px-6 font-bold shadow-lg flex items-center justify-between"

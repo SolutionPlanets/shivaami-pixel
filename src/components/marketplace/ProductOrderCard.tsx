@@ -99,11 +99,11 @@ export default function ProductOrderCard({ product, index }: ProductOrderCardPro
           {/* Price */}
           <div>
             <p className="text-sm font-semibold text-foreground tabular-nums">
-              MRP {formatInr(unitPrice)}
+              {formatInr(unitPrice)}
               <span className="font-normal text-muted-foreground">/device</span>
             </p>
             <p className="text-xs text-primary font-medium mt-0.5">
-              Contact for bulk corporate pricing
+              Corporate price incl. 18% GST
             </p>
           </div>
 

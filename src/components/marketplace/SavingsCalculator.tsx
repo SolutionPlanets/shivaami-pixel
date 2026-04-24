@@ -1,74 +1,64 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import {
   RETAIL_PRICES,
-  BENEFIT_VALUES,
-  PRO_SLUGS,
-  calcSavings,
+  CORPORATE_PRICING_NOTE,
   formatInr,
-  getTierLabel,
 } from "@/lib/marketplace";
 import { useInView } from "@/hooks/useInView";
 
 const MODELS = [
-  { slug: "pixel-10a", label: "Pixel 10a", defaultQty: 5 },
-  { slug: "pixel-10", label: "Pixel 10", defaultQty: 5 },
-  { slug: "pixel-10-pro-xl", label: "Pixel 10 Pro XL", defaultQty: 3 },
-  { slug: "pixel-10-pro-fold", label: "Pixel 10 Pro Fold", defaultQty: 2 },
+  { slug: "pixel-10a", label: "Pixel 10a" },
+  { slug: "pixel-10", label: "Pixel 10" },
+  { slug: "pixel-10-pro-xl", label: "Pixel 10 Pro XL" },
+  { slug: "pixel-10-pro-fold", label: "Pixel 10 Pro Fold" },
 ];
 
-const BENEFITS = [
-  { key: "protection_plan", label: "2-Year Protection Plan", value: BENEFIT_VALUES.protection_plan, proOnly: false },
-  { key: "zero_touch_deployment", label: "Zero-Touch Deployment", value: BENEFIT_VALUES.zero_touch_deployment, proOnly: false },
-  { key: "cloud_storage", label: "Free Google Cloud Storage", value: BENEFIT_VALUES.cloud_storage, proOnly: false },
-  { key: "ai_workshops", label: "AI Productivity Workshops", value: BENEFIT_VALUES.ai_workshops, proOnly: false },
-  { key: "dedicated_support", label: "Dedicated Business Support", value: BENEFIT_VALUES.dedicated_support, proOnly: false },
-  { key: "google_ai_pro", label: "Google AI Pro", value: BENEFIT_VALUES.google_ai_pro, proOnly: true },
-] as const;
+const DEFAULT_QTYS: Record<string, number> = {
+  "pixel-10a": 5,
+  "pixel-10": 5,
+  "pixel-10-pro-xl": 3,
+  "pixel-10-pro-fold": 2,
+};
+
+const SMB_BENEFITS = [
+  {
+    title: "Corporate Pricing",
+    description:
+      "All prices are inclusive of 18% GST with full input tax credit — reducing your effective cost.",
+    icon: "🏢",
+  },
+  {
+    title: "2-Year Protection Plan",
+    description:
+      "Covers accidental & liquid damage. Includes free pan-India pickup and drop for repairs in Year 1.",
+    icon: "🛡️",
+  },
+  {
+    title: "1-Year Extended Warranty",
+    description:
+      "Total 2 years of manufacturer warranty coverage — double the standard period.",
+    icon: "✅",
+  },
+  {
+    title: "Exclusive AI Workshops & Support",
+    description:
+      "Training and ongoing support by Google and Shivaami — Gemini Live, Call Assist, Camera Coach, and more.",
+    icon: "🎓",
+  },
+];
 
 export default function SavingsCalculator() {
   const { ref, isVisible } = useInView(0.1);
 
-  const [qtys, setQtys] = useState<Record<string, number>>(
-    Object.fromEntries(MODELS.map((m) => [m.slug, m.defaultQty]))
+  const [qtys, setQtys] = useState<Record<string, number>>(DEFAULT_QTYS);
+
+  const totalQty = MODELS.reduce((s, m) => s + qtys[m.slug], 0);
+  const totalPrice = MODELS.reduce(
+    (s, m) => s + qtys[m.slug] * RETAIL_PRICES[m.slug],
+    0
   );
-
-  const items = MODELS.map((m) => ({
-    slug: m.slug,
-    quantity: qtys[m.slug],
-    unitPriceInr: RETAIL_PRICES[m.slug],
-  }));
-
-  const summary = calcSavings(items);
-
-  // Animated counter for grand total savings
-  const [displayedSavings, setDisplayedSavings] = useState(summary.grandTotalSavings);
-  const animFrameRef = useRef<number>(0);
-  const prevSavingsRef = useRef(summary.grandTotalSavings);
-
-  useEffect(() => {
-    const start = prevSavingsRef.current;
-    const target = summary.grandTotalSavings;
-    prevSavingsRef.current = target;
-    if (start === target) return;
-
-    const duration = 600;
-    const startTime = performance.now();
-
-    function step(now: number) {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplayedSavings(Math.round(start + (target - start) * eased));
-      if (progress < 1) {
-        animFrameRef.current = requestAnimationFrame(step);
-      }
-    }
-
-    cancelAnimationFrame(animFrameRef.current);
-    animFrameRef.current = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animFrameRef.current);
-  }, [summary.grandTotalSavings]);
 
   function changeQty(slug: string, delta: number) {
     setQtys((prev) => ({
@@ -76,17 +66,6 @@ export default function SavingsCalculator() {
       [slug]: Math.max(0, prev[slug] + delta),
     }));
   }
-
-  const proQty = (qtys["pixel-10-pro-xl"] ?? 0) + (qtys["pixel-10-pro-fold"] ?? 0);
-  const nonProQty = (qtys["pixel-10a"] ?? 0) + (qtys["pixel-10"] ?? 0);
-  const savingsPct =
-    summary.retailTotal > 0
-      ? Math.round(
-          (summary.grandTotalSavings /
-            (summary.retailTotal + summary.benefitsValue)) *
-            100
-        )
-      : 0;
 
   return (
     <section
@@ -99,13 +78,13 @@ export default function SavingsCalculator() {
           className={`text-center mb-10 reveal delay-100 ${isVisible ? "visible" : ""}`}
         >
           <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-4 py-1.5 rounded-full border border-primary/20 mb-4 tracking-wide uppercase">
-            Interactive Savings Calculator
+            SMB Pricing Calculator
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-            See How Much Your Business Saves
+            Calculate Your Corporate Price
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Adjust quantities below — watch your total savings update instantly
+            Adjust quantities to see the total — all prices include 18% GST
           </p>
         </div>
 
@@ -115,7 +94,7 @@ export default function SavingsCalculator() {
           <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/60">
             {/* LEFT — quantity inputs */}
             <div className="p-8">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-6">
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-6">
                 How many devices?
               </h3>
 
@@ -130,12 +109,7 @@ export default function SavingsCalculator() {
                         {model.label}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        MRP {formatInr(RETAIL_PRICES[model.slug])}
-                        {PRO_SLUGS.has(model.slug) && (
-                          <span className="ml-1.5 text-primary font-medium">
-                            + AI Pro
-                          </span>
-                        )}
+                        {formatInr(RETAIL_PRICES[model.slug])} incl. GST
                       </p>
                     </div>
                     {/* Stepper */}
@@ -144,7 +118,7 @@ export default function SavingsCalculator() {
                         onClick={() => changeQty(model.slug, -1)}
                         disabled={qtys[model.slug] === 0}
                         className="w-9 h-9 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/40 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-lg font-light"
-                        aria-label={`Decrease ${model.label} quantity`}
+                        aria-label={`Decrease ${model.label}`}
                       >
                         −
                       </button>
@@ -154,7 +128,7 @@ export default function SavingsCalculator() {
                       <button
                         onClick={() => changeQty(model.slug, 1)}
                         className="w-9 h-9 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors text-lg font-light"
-                        aria-label={`Increase ${model.label} quantity`}
+                        aria-label={`Increase ${model.label}`}
                       >
                         +
                       </button>
@@ -163,119 +137,58 @@ export default function SavingsCalculator() {
                 ))}
               </div>
 
-              {/* Total device count */}
-              <div className="mt-8 pt-6 border-t border-border/60 flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Total devices
-                </span>
-                <span className="text-2xl font-bold text-foreground tabular-nums">
-                  {summary.totalQty}
-                </span>
-              </div>
-
-              {/* Tier info */}
-              {summary.totalQty > 0 && (
-                <p className="mt-3 text-xs text-primary font-medium">
-                  {getTierLabel(summary.totalQty)}
-                </p>
-              )}
-            </div>
-
-            {/* RIGHT — savings breakdown */}
-            <div className="p-8 flex flex-col">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-6">
-                Your savings breakdown
-              </h3>
-
-              {/* Retail vs effective price */}
-              <div className="flex flex-col gap-2 mb-6">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Retail total (MRP)</span>
-                  <span className="line-through text-muted-foreground tabular-nums">
-                    {formatInr(summary.retailTotal)}
+              {/* Totals */}
+              <div className="mt-8 pt-6 border-t border-border/60">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm text-muted-foreground">
+                    Total devices
+                  </span>
+                  <span className="bg-emerald-100 text-emerald-700 text-base font-bold tabular-nums px-4 py-1.5 rounded-full border border-emerald-200">
+                    {totalQty}
                   </span>
                 </div>
-                {summary.discountPct > 0 && (
-                  <div className="flex justify-between text-sm">
-                    <span className="text-emerald-600 font-medium">
-                      Bulk discount ({summary.discountPct}%)
+                {totalQty > 0 && (
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-sm text-muted-foreground">
+                      Total amount
                     </span>
-                    <span className="text-emerald-600 font-semibold tabular-nums">
-                      −{formatInr(summary.discountAmount)}
+                    <span className="bg-emerald-100 text-emerald-700 font-bold text-base tabular-nums px-4 py-1.5 rounded-full border border-emerald-200">
+                      {formatInr(totalPrice)}
                     </span>
                   </div>
                 )}
-                <div className="flex justify-between text-sm font-semibold border-t border-border/60 pt-2 mt-1">
-                  <span className="text-foreground">You pay</span>
-                  <span className="text-foreground tabular-nums">
-                    {formatInr(summary.effectivePrice)}
-                  </span>
-                </div>
-              </div>
-
-              {/* Benefits breakdown */}
-              <div className="bg-muted/30 rounded-2xl p-4 mb-6">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                  Bundled B2B benefits value
-                </p>
-                <div className="flex flex-col gap-2">
-                  {BENEFITS.map((benefit) => {
-                    const qty = benefit.proOnly ? proQty : summary.totalQty;
-                    if (qty === 0) return null;
-                    const total = benefit.value * qty;
-                    return (
-                      <div
-                        key={benefit.key}
-                        className="flex items-center justify-between text-xs"
-                      >
-                        <span className="flex items-center gap-1.5 text-muted-foreground">
-                          <span className="text-emerald-500">✓</span>
-                          {benefit.label}
-                          {benefit.proOnly && (
-                            <span className="text-primary text-[10px] font-medium">
-                              (Pro/Fold)
-                            </span>
-                          )}
-                        </span>
-                        <span className="font-medium text-foreground tabular-nums">
-                          +{formatInr(total)}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Grand total savings — animated */}
-              <div className="bg-accent rounded-2xl p-5 text-center mb-6">
-                <p className="text-xs font-semibold text-foreground/60 uppercase tracking-widest mb-1">
-                  Total Value You Get
-                </p>
-                <p className="text-4xl font-bold text-foreground tabular-nums leading-tight">
-                  {formatInr(displayedSavings)}
-                </p>
-                <p className="text-sm text-foreground/60 mt-1">
-                  vs buying retail with no business benefits
+                <p className="text-xs text-primary font-medium mt-3">
+                  {CORPORATE_PRICING_NOTE}
                 </p>
               </div>
+            </div>
 
-              {/* Progress bar */}
-              {summary.totalQty > 0 && (
-                <div className="mb-6">
-                  <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
-                    <span>Savings vs retail</span>
-                    <span className="font-semibold text-foreground">
-                      {savingsPct}%
+            {/* RIGHT — SMB Benefits */}
+            <div className="p-8 flex flex-col">
+              <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-6">
+                SMB Benefits included
+              </h3>
+
+              <div className="flex flex-col gap-4 flex-1">
+                {SMB_BENEFITS.map((benefit, i) => (
+                  <div
+                    key={i}
+                    className="flex gap-4 p-4 rounded-2xl bg-muted/30 hover:bg-muted/50 transition-colors"
+                  >
+                    <span className="text-2xl shrink-0 mt-0.5">
+                      {benefit.icon}
                     </span>
+                    <div>
+                      <p className="font-semibold text-foreground text-sm mb-1">
+                        {benefit.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {benefit.description}
+                      </p>
+                    </div>
                   </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-emerald-400 rounded-full transition-all duration-500 ease-out"
-                      style={{ width: `${Math.min(savingsPct, 100)}%` }}
-                    />
-                  </div>
-                </div>
-              )}
+                ))}
+              </div>
 
               {/* CTA */}
               <button
@@ -284,10 +197,9 @@ export default function SavingsCalculator() {
                     .getElementById("order-grid")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-full hover:bg-[#1A73E8] transition-colors text-sm flex items-center justify-center gap-2 mt-auto"
+                className="w-full mt-6 bg-primary text-white font-semibold py-3 px-6 rounded-full hover:bg-[#1A73E8] transition-colors text-sm flex items-center justify-center gap-2"
               >
-                Get This Deal
-                <span>→</span>
+                Build Your Order →
               </button>
             </div>
           </div>

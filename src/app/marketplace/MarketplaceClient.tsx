@@ -30,9 +30,9 @@ export default function MarketplaceClient({ products }: MarketplaceClientProps) 
             <span className="text-primary">Google Pixel 10</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Corporate pricing, bulk discounts up to 18%, and exclusive B2B
-            benefits — only through Shivaami, Mumbai&apos;s authorized Google
-            Partner.
+            Exclusive corporate pricing with 18% GST input credit, 2-year
+            protection, and AI support — only through Shivaami, Mumbai&apos;s
+            authorized Google Partner.
           </p>
         </div>
       </section>
@@ -64,8 +64,20 @@ export default function MarketplaceClient({ products }: MarketplaceClientProps) 
           </div>
 
           {/* Sticky sidebar — desktop only */}
-          <div className="hidden lg:block lg:sticky lg:top-24">
+          <div className="hidden lg:flex lg:flex-col lg:gap-5 lg:sticky lg:top-24">
             <OrderSummary onCheckout={() => setIsModalOpen(true)} />
+
+            {/* Promo video */}
+            <div className="rounded-3xl overflow-hidden border border-border/60 shadow-sm bg-black">
+              <video
+                src="/assets/marketplace.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
