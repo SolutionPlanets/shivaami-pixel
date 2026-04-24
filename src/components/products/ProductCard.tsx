@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRef, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { buttonVariants } from "@/components/ui/button";
@@ -14,7 +15,15 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, index }: ProductCardProps) {
   const { ref, isVisible } = useInView(0.1);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const delays = ["delay-100", "delay-200", "delay-300", "delay-400"];
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => {});
+  }, []);
 
   return (
     <div
@@ -23,14 +32,19 @@ export default function ProductCard({ product, index }: ProductCardProps) {
     >
       {/* Device visual */}
       <div
-        className="flex items-center justify-center h-48 relative overflow-hidden"
+        className="relative h-48 overflow-hidden"
         style={{ background: product.accentBg }}
       >
-        <div className="w-16 h-28 rounded-[18px] shadow-lg flex items-center justify-center font-bold text-2xl text-foreground/20 bg-white/30 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
-          G
-        </div>
+        <video
+          ref={videoRef}
+          src={product.video}
+          className="absolute inset-0 w-full h-full object-cover"
+          muted
+          playsInline
+          loop
+        />
         {/* Badge */}
-        <span className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full ${product.badgeColor}`}>
+        <span className={`absolute top-3 left-3 z-10 text-xs font-semibold px-2.5 py-1 rounded-full ${product.badgeColor}`}>
           {product.badge}
         </span>
       </div>

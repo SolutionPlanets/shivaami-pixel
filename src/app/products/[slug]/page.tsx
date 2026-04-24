@@ -6,6 +6,7 @@ import ProductSpecsTable from "@/components/products/ProductSpecsTable";
 import ProductAIFeatures from "@/components/products/ProductAIFeatures";
 import ProductOrderCTA from "@/components/products/ProductOrderCTA";
 import ProductHero from "@/components/products/ProductHero";
+import VideoCarousel from "@/components/products/VideoCarousel";
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products";
 
 interface Props {
@@ -38,6 +39,7 @@ export default async function ProductPage({ params }: Props) {
     <>
       <Navbar />
       <main>
+        <VideoCarousel />
         <ProductHero product={product} />
         <ProductAIFeatures features={product.aiFeatures} productName={product.name} />
         <ProductSpecsTable specs={product.specs} productName={product.name} />

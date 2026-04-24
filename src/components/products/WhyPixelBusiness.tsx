@@ -60,7 +60,7 @@ export default function WhyPixelBusiness() {
   const { ref: statsRef, isVisible: statsVisible } = useInView(0.1);
 
   return (
-    <section className="py-24 bg-[#FAFAFA]">
+    <section className="py-24 bg-[#F5F0FF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

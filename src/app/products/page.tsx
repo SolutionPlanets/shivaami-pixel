@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import ProductCatalogHero from "@/components/products/ProductCatalogHero";
 import ProductCard from "@/components/products/ProductCard";
 import WhyPixelBusiness from "@/components/products/WhyPixelBusiness";
+import PlanComparison from "@/components/landing/PlanComparison";
 import { products } from "@/lib/products";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default function ProductsPage() {
         <ProductCatalogHero />
 
         {/* Product Grid */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-[#F0F4FF]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
@@ -44,6 +45,7 @@ export default function ProductsPage() {
         </section>
 
         <WhyPixelBusiness />
+        <PlanComparison />
       </main>
       <Footer />
     </>

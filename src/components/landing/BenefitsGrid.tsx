@@ -1,6 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import { useInView } from "@/hooks/useInView";
+import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Shield,
@@ -9,6 +12,7 @@ import {
   BrainCircuit,
   Cloud,
   Headphones,
+  ArrowRight,
   Sparkles,
   Star,
   Zap,
@@ -33,7 +37,7 @@ const benefits = [
   },
   {
     icon: BadgePercent,
-    title: "Corporate SMB Pricing",
+    title: "SMB Pricing with GST benefits",
     description:
       "Exclusive business pricing unavailable in retail. Volume discounts and flexible payment terms for teams of any size.",
     color: "#FCE8E6",
@@ -70,6 +74,7 @@ export default function BenefitsGrid() {
 
   return (
     <section id="benefits" className="relative py-28 bg-[#F5F0FF] overflow-hidden">
+      
       {/* Decorative floating icons in background */}
       <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
         <Sparkles
@@ -117,6 +122,9 @@ export default function BenefitsGrid() {
           </p>
         </div>
 
+        {/* Big Portrait Hero Banner */}
+        <HeroBanner />
+
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {benefits.map((benefit, i) => {
@@ -133,6 +141,56 @@ export default function BenefitsGrid() {
         </div>
       </div>
     </section>
+  );
+}
+
+function HeroBanner() {
+  const { ref, isVisible } = useInView(0.1);
+  return (
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={`reveal ${isVisible ? "visible" : ""} relative rounded-3xl overflow-hidden bg-[#DDE5FF] mb-4`}
+    >
+      <div className="flex flex-col md:flex-row items-center">
+        {/* Text side */}
+        <div className="flex-1 px-8 py-10 md:py-14 md:px-12 z-10">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="w-5 h-5 text-primary animate-float" />
+            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+              New · H1 2026
+            </span>
+          </div>
+          <h3 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] mb-3 leading-tight">
+            Google Pixel 10
+            <br />
+            <span className="text-primary">with Gemini</span>
+          </h3>
+          <p className="text-[#3d3d5c]/70 mb-6 max-w-xs leading-relaxed">
+            The smartest, most protected business phone in India — available exclusively through Shivaami.
+          </p>
+          <Link
+            href="/products"
+            className={cn(
+              buttonVariants({ size: "sm" }),
+              "rounded-full bg-primary text-white gap-1.5 inline-flex items-center hover:bg-primary/90"
+            )}
+          >
+            Explore lineup <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+        {/* Video side */}
+        <div className="w-full md:w-3/4 shrink-0 self-stretch min-h-55 relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+            src="/assets/teaser.mp4"
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -132,11 +132,11 @@ function LifestyleBanner() {
       </div>
 
       {/* Floating chips on the banner */}
-      <div className="absolute top-6 right-6 flex flex-col gap-2">
+      <div className="absolute bottom-6 right-6 flex flex-col gap-2">
         {["Gemini Live", "Call Assist", "Magic Cue"].map((label, i) => (
           <span
             key={label}
-            className="bg-white/15 backdrop-blur text-white text-xs font-medium px-3 py-1.5 rounded-full border border-white/20 animate-float"
+            className="bg-mauve-400 backdrop-blur text-mauve-950 text-xs font-medium px-3 py-1.5 rounded-full border border-white/20 animate-float"
             style={{ animationDelay: `${i * 0.4}s` }}
           >
             {label}

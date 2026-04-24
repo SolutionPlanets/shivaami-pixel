@@ -6,25 +6,30 @@ import { useInView } from "@/hooks/useInView";
 
 const faqs = [
   {
-    q: "How does the 2-year protection plan work?",
-    a: "The Shivaami business protection plan covers accidental water damage and theft for 2 full years from purchase. Simply file a claim through our support team — we handle the replacement or repair process end-to-end so your team stays productive without interruption.",
-  },
-  {
-    q: "What is zero-touch deployment?",
-    a: "Zero-touch deployment means your Pixel devices arrive pre-enrolled and configured for your company's apps, email, and security policies. Employees simply turn on the device and sign in — no IT setup time required. Works seamlessly with Google Workspace.",
-  },
-  {
-    q: "How do I get corporate / SMB pricing?",
-    a: "Pricing is based on your team size and the models you choose. Contact us via WhatsApp or email at pixel@shivaami.com with your team count and model preferences — we'll send you a custom quote within 24 hours. Volume discounts apply from 5 devices and above.",
+    q: "Why should businesses provide phones as office assets?",
+    a: "Just as companies issue laptops, providing employees with a dedicated business phone is a smart operational decision. Your IT team gets full control — enforce security policies, remotely wipe data if a device is lost, and keep personal and work data cleanly separated via Android Work Profiles. Productivity improves because employees aren't juggling two devices or mixing personal apps with work calls. From a financial standpoint, phones purchased as business assets are eligible for depreciation under Indian tax law, reducing your effective cost. Shivaami handles bulk procurement, zero-touch enrolment, and a 2-year protection plan — so the entire lifecycle is managed for you.",
   },
   {
     q: "What do the AI Productivity Workshops include?",
     a: "Our workshops are hands-on sessions (online or in-person in Mumbai) where your team learns to use Gemini Live, Call Assist, Magic Cue, and Camera Coach in real work scenarios. Sessions are customized to your industry and use case — typically 2–3 hours.",
   },
   {
+    q: "How does the 2-year protection plan work?",
+    a: "The Shivaami business protection plan covers accidental water damage and theft for 2 full years from purchase. Simply file a claim through our support team — we handle the replacement or repair process end-to-end so your team stays productive without interruption.",
+  },
+  {
+    q: "What is zero-touch deployment?",
+    a: "Zero-touch deployment means your Pixel devices arrive pre-enrolled and configured for your company's apps, email, and security policies. Employees simply turn on the device and sign in — no IT setup time required. Works seamlessly with Google Workspace.",
+  },    
+  {
     q: "How do I place an order through the marketplace?",
     a: "Use our Marketplace to select your Pixel model(s), choose colors and quantities, and place your order online. You can pay immediately via UPI, card, or net banking — or request a corporate invoice and pay via payment link after we review your order.",
   },
+  {
+    q: "How do I get corporate / SMB pricing?",
+    a: "Pricing is based on your team size and the models you choose. Contact us via WhatsApp or email at pixel@shivaami.com with your team count and model preferences — we'll send you a custom quote within 24 hours. Volume discounts apply from 5 devices and above.",
+  },
+  
 ];
 
 export default function FAQSection() {
@@ -42,7 +47,7 @@ export default function FAQSection() {
         <Shield className="absolute top-1/2 left-8 w-7 h-7 text-[#EA4335]/22 animate-float-slow" style={{ animationDelay: "1.8s" }} />
       </div>
 
-      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
           ref={ref as React.RefObject<HTMLDivElement>}
@@ -60,7 +65,7 @@ export default function FAQSection() {
         </div>
 
         {/* Accordion */}
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {faqs.map((faq, i) => (
             <FAQItem key={i} faq={faq} index={i} open={open} setOpen={setOpen} />
           ))}
@@ -104,7 +109,7 @@ function FAQItem({
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`reveal delay-${[0, 100, 200, 300, 400][index] ?? 0} ${isVisible ? "visible" : ""} bg-white border border-border/50 rounded-2xl overflow-hidden hover:border-primary/25 hover:shadow-md transition-all duration-200`}
+      className={`reveal delay-${[0, 100, 200, 300, 400, 500][index] ?? 0} ${isVisible ? "visible" : ""} bg-white border border-border/50 rounded-2xl overflow-hidden hover:border-primary/25 hover:shadow-md transition-all duration-200`}
     >
       <button
         onClick={() => setOpen(isOpen ? null : index)}

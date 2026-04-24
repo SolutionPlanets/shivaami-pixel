@@ -29,6 +29,7 @@ export interface Product {
   aiFeatures: AIFeature[];
   businessValue: string;
   ecosystemBenefits: string[];
+  video: string;
 }
 
 export const products: Product[] = [
@@ -36,10 +37,10 @@ export const products: Product[] = [
     slug: "pixel-10a",
     name: "Pixel 10a",
     tagline: "Smart choice for every team member",
-    badge: "Most Affordable",
+    badge: "Affordable",
     badgeColor: "bg-[#CEEAD6] text-[#1E8E3E]",
     accentBg: "#CEEAD6",
-    priceFrom: "Contact for pricing",
+    priceFrom: "\u20B9 46,999",
     colors: [
       { name: "Obsidian", hex: "#1F1F1F" },
       { name: "Aloe", hex: "#8FB8A8" },
@@ -108,6 +109,7 @@ export const products: Product[] = [
       "3 months of YouTube Premium",
       "Gemini Nano on-device AI",
     ],
+    video: "/assets/pixel10a.mov",
   },
   {
     slug: "pixel-10",
@@ -116,7 +118,7 @@ export const products: Product[] = [
     badge: "Best Seller",
     badgeColor: "bg-[#D2E3FC] text-[#1A73E8]",
     accentBg: "#D2E3FC",
-    priceFrom: "Contact for pricing",
+    priceFrom: "\u20B9 67,999",
     colors: [
       { name: "Obsidian", hex: "#1F1F1F" },
       { name: "Viridian Blue", hex: "#1A6FE3" },
@@ -188,6 +190,7 @@ export const products: Product[] = [
       "6 months Fitbit Premium",
       "3 months YouTube Premium",
     ],
+    video: "/assets/pixel10.mov",
   },
   {
     slug: "pixel-10-pro-xl",
@@ -196,7 +199,7 @@ export const products: Product[] = [
     badge: "Popular",
     badgeColor: "bg-[#E8D5FF] text-[#7C3AED]",
     accentBg: "#E8D5FF",
-    priceFrom: "Contact for pricing",
+    priceFrom: "\u20B9 1,14,999",
     colors: [
       { name: "Obsidian", hex: "#1F1F1F" },
       { name: "Misty", hex: "#8E9BAE" },
@@ -266,6 +269,7 @@ export const products: Product[] = [
       "6 months Fitbit Premium",
       "3 months YouTube Premium",
     ],
+    video: "/assets/10_pro_xl.mov",
   },
   {
     slug: "pixel-10-pro-fold",
@@ -274,7 +278,7 @@ export const products: Product[] = [
     badge: "Flagship",
     badgeColor: "bg-[#FCE8E6] text-[#D93025]",
     accentBg: "#FEF0CD",
-    priceFrom: "Contact for pricing",
+    priceFrom: "\u20B9 1,62,999",
     colors: [
       { name: "Obsidian", hex: "#1F1F1F" },
       { name: "Porcelain", hex: "#F0EDE8" },
@@ -344,6 +348,7 @@ export const products: Product[] = [
       "6 months Fitbit Premium",
       "3 months YouTube Premium",
     ],
+    video: "/assets/10_pro_fold.mov",
   },
 ];
 
